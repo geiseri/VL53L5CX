@@ -1,15 +1,31 @@
-#pragma once
+/**
+  *
+  * Copyright (c) 2021 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 
-#include "vl53l5cx_i2.h"
+#ifndef VL53L5CX_API_H_
+#define VL53L5CX_API_H_
 
-static const uint8_t VL53L5CX_NB_TARGET_PER_ZONE = 1; 
+#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION < 6010050)
+#pragma anon_unions
+#endif
 
+
+
+#include "platform.h"
 
 /**
  * @brief Current driver version.
  */
 
-#define VL53L5CX_API_REVISION			"VL53L5CX_1.0.4"
+#define VL53L5CX_API_REVISION			"VL53L5CX_1.3.11"
 
 /**
  * @brief Default I2C address of VL53L5CX sensor. Can be changed using function
@@ -63,6 +79,10 @@ static const uint8_t VL53L5CX_NB_TARGET_PER_ZONE = 1;
  */
 
 #define VL53L5CX_STATUS_OK			((uint8_t) 0U)
+#define VL53L5CX_STATUS_TIMEOUT_ERROR		((uint8_t) 1U)
+#define VL53L5CX_STATUS_CORRUPTED_FRAME		((uint8_t) 2U)
+#define VL53L5CX_STATUS_CRC_CSUM_FAILED		((uint8_t) 3U)
+#define VL53L5CX_STATUS_XTALK_FAILED		((uint8_t) 4U)
 #define VL53L5CX_MCU_ERROR			((uint8_t) 66U)
 #define VL53L5CX_STATUS_INVALID_PARAM		((uint8_t) 127U)
 #define VL53L5CX_STATUS_ERROR			((uint8_t) 255U)
@@ -73,36 +93,36 @@ static const uint8_t VL53L5CX_NB_TARGET_PER_ZONE = 1;
 
 #if VL53L5CX_NB_TARGET_PER_ZONE == 1
 
-#define VL53L5CX_START_BH			((uint32_t)0x0000000DU)
+#define VL53L5CX_START_BH				((uint32_t)0x0000000DU)
 #define VL53L5CX_METADATA_BH			((uint32_t)0x54B400C0U)
 #define VL53L5CX_COMMONDATA_BH			((uint32_t)0x54C00040U)
 #define VL53L5CX_AMBIENT_RATE_BH		((uint32_t)0x54D00104U)
 #define VL53L5CX_SPAD_COUNT_BH			((uint32_t)0x55D00404U)
-#define VL53L5CX_NB_TARGET_DETECTED_BH	        ((uint32_t)0xCF7C0401U)
-#define VL53L5CX_SIGNAL_RATE_BH			((uint32_t)0xCFBC0404U)
-#define VL53L5CX_RANGE_SIGMA_MM_BH		((uint32_t)0xD2BC0402U)
-#define VL53L5CX_DISTANCE_BH			((uint32_t)0xD33C0402U)
-#define VL53L5CX_REFLECTANCE_BH			((uint32_t)0xD43C0401U)
-#define VL53L5CX_TARGET_STATUS_BH		((uint32_t)0xD47C0401U)
-#define VL53L5CX_MOTION_DETECT_BH		((uint32_t)0xCC5008C0U)
+#define VL53L5CX_NB_TARGET_DETECTED_BH	((uint32_t)0xDB840401U)
+#define VL53L5CX_SIGNAL_RATE_BH			((uint32_t)0xDBC40404U)
+#define VL53L5CX_RANGE_SIGMA_MM_BH		((uint32_t)0xDEC40402U)
+#define VL53L5CX_DISTANCE_BH			((uint32_t)0xDF440402U)
+#define VL53L5CX_REFLECTANCE_BH			((uint32_t)0xE0440401U)
+#define VL53L5CX_TARGET_STATUS_BH		((uint32_t)0xE0840401U)
+#define VL53L5CX_MOTION_DETECT_BH		((uint32_t)0xD85808C0U)
 
 #define VL53L5CX_METADATA_IDX			((uint16_t)0x54B4U)
 #define VL53L5CX_SPAD_COUNT_IDX			((uint16_t)0x55D0U)
 #define VL53L5CX_AMBIENT_RATE_IDX		((uint16_t)0x54D0U)
-#define VL53L5CX_NB_TARGET_DETECTED_IDX		((uint16_t)0xCF7CU)
-#define VL53L5CX_SIGNAL_RATE_IDX		((uint16_t)0xCFBCU)
-#define VL53L5CX_RANGE_SIGMA_MM_IDX		((uint16_t)0xD2BCU)
-#define VL53L5CX_DISTANCE_IDX			((uint16_t)0xD33CU)
-#define VL53L5CX_REFLECTANCE_EST_PC_IDX		((uint16_t)0xD43CU)
-#define VL53L5CX_TARGET_STATUS_IDX		((uint16_t)0xD47CU)
-#define VL53L5CX_MOTION_DETEC_IDX		((uint16_t)0xCC50U)
+#define VL53L5CX_NB_TARGET_DETECTED_IDX	((uint16_t)0xDB84U)
+#define VL53L5CX_SIGNAL_RATE_IDX		((uint16_t)0xDBC4U)
+#define VL53L5CX_RANGE_SIGMA_MM_IDX		((uint16_t)0xDEC4U)
+#define VL53L5CX_DISTANCE_IDX			((uint16_t)0xDF44U)
+#define VL53L5CX_REFLECTANCE_EST_PC_IDX	((uint16_t)0xE044U)
+#define VL53L5CX_TARGET_STATUS_IDX		((uint16_t)0xE084U)
+#define VL53L5CX_MOTION_DETEC_IDX		((uint16_t)0xD858U)
 
 #else
-#define VL53L5CX_START_BH			((uint32_t)0x0000000DU)
+#define VL53L5CX_START_BH				((uint32_t)0x0000000DU)
 #define VL53L5CX_METADATA_BH			((uint32_t)0x54B400C0U)
 #define VL53L5CX_COMMONDATA_BH			((uint32_t)0x54C00040U)
 #define VL53L5CX_AMBIENT_RATE_BH		((uint32_t)0x54D00104U)
-#define VL53L5CX_NB_TARGET_DETECTED_BH		((uint32_t)0x57D00401U)
+#define VL53L5CX_NB_TARGET_DETECTED_BH	((uint32_t)0x57D00401U)
 #define VL53L5CX_SPAD_COUNT_BH			((uint32_t)0x55D00404U)
 #define VL53L5CX_SIGNAL_RATE_BH			((uint32_t)0x58900404U)
 #define VL53L5CX_RANGE_SIGMA_MM_BH		((uint32_t)0x64900402U)
@@ -114,11 +134,11 @@ static const uint8_t VL53L5CX_NB_TARGET_PER_ZONE = 1;
 #define VL53L5CX_METADATA_IDX			((uint16_t)0x54B4U)
 #define VL53L5CX_SPAD_COUNT_IDX			((uint16_t)0x55D0U)
 #define VL53L5CX_AMBIENT_RATE_IDX		((uint16_t)0x54D0U)
-#define VL53L5CX_NB_TARGET_DETECTED_IDX		((uint16_t)0x57D0U)
+#define VL53L5CX_NB_TARGET_DETECTED_IDX	((uint16_t)0x57D0U)
 #define VL53L5CX_SIGNAL_RATE_IDX		((uint16_t)0x5890U)
 #define VL53L5CX_RANGE_SIGMA_MM_IDX		((uint16_t)0x6490U)
 #define VL53L5CX_DISTANCE_IDX			((uint16_t)0x6690U)
-#define VL53L5CX_REFLECTANCE_EST_PC_IDX		((uint16_t)0x6A90U)
+#define VL53L5CX_REFLECTANCE_EST_PC_IDX	((uint16_t)0x6A90U)
 #define VL53L5CX_TARGET_STATUS_IDX		((uint16_t)0x6B90U)
 #define VL53L5CX_MOTION_DETEC_IDX		((uint16_t)0xCC50U)
 #endif
@@ -139,18 +159,23 @@ static const uint8_t VL53L5CX_NB_TARGET_PER_ZONE = 1;
 #define VL53L5CX_DCI_FW_NB_TARGET		((uint16_t)0x5478)
 #define VL53L5CX_DCI_RANGING_MODE		((uint16_t)0xAD30U)
 #define VL53L5CX_DCI_DSS_CONFIG			((uint16_t)0xAD38U)
+#define VL53L5CX_DCI_VHV_CONFIG			((uint16_t)0xAD60U)
 #define VL53L5CX_DCI_TARGET_ORDER		((uint16_t)0xAE64U)
 #define VL53L5CX_DCI_SHARPENER			((uint16_t)0xAED8U)
-#define VL53L5CX_DCI_MOTION_DETECTOR_CFG	((uint16_t)0xBFACU)
-#define VL53L5CX_DCI_SINGLE_RANGE		((uint16_t)0xCD5CU)
-#define VL53L5CX_DCI_OUTPUT_CONFIG		((uint16_t)0xCD60U)
-#define VL53L5CX_DCI_OUTPUT_ENABLES		((uint16_t)0xCD68U)
-#define VL53L5CX_DCI_OUTPUT_LIST		((uint16_t)0xCD78U)
-#define VL53L5CX_DCI_PIPE_CONTROL		((uint16_t)0xCF78U)
+#define VL53L5CX_DCI_INTERNAL_CP		((uint16_t)0xB39CU)
+#define VL53L5CX_DCI_SYNC_PIN			((uint16_t)0xB5F0U)
+#define VL53L5CX_DCI_MOTION_DETECTOR_CFG ((uint16_t)0xBFACU)
+#define VL53L5CX_DCI_SINGLE_RANGE		((uint16_t)0xD964U)
+#define VL53L5CX_DCI_OUTPUT_CONFIG		((uint16_t)0xD968U)
+#define VL53L5CX_DCI_OUTPUT_ENABLES		((uint16_t)0xD970U)
+#define VL53L5CX_DCI_OUTPUT_LIST		((uint16_t)0xD980U)
+#define VL53L5CX_DCI_PIPE_CONTROL		((uint16_t)0xDB80U)
+#define VL53L5CX_GLARE_FILTER			((uint16_t)0xE108U)
+
 
 #define VL53L5CX_UI_CMD_STATUS			((uint16_t)0x2C00U)
 #define VL53L5CX_UI_CMD_START			((uint16_t)0x2C04U)
-#define VL53L5CX_UI_CMD_END			((uint16_t)0x2FFFU)
+#define VL53L5CX_UI_CMD_END				((uint16_t)0x2FFFU)
 
 /**
  * @brief Inner values for API. Max buffer size depends of the selected output.
@@ -213,13 +238,13 @@ static const uint8_t VL53L5CX_NB_TARGET_PER_ZONE = 1;
 /**
  * @brief Macro VL53L5CX_MAX_RESULTS_SIZE indicates the maximum size used by
  * output through I2C. Value 40 corresponds to headers + meta-data + common-data
- * and 8 corresponds to the footer.
+ * and 20 corresponds to the footer.
  */
 
 #define VL53L5CX_MAX_RESULTS_SIZE ( 40U \
 	+ L5CX_AMB_SIZE + L5CX_SPAD_SIZE + L5CX_NTAR_SIZE + L5CX_SPS_SIZE \
 	+ L5CX_SIGR_SIZE + L5CX_DIST_SIZE + L5CX_RFLEST_SIZE + L5CX_STA_SIZE \
-	+ L5CX_MOT_SIZE + 8U)
+	+ L5CX_MOT_SIZE + 20U)
 
 /**
  * @brief Macro VL53L5CX_TEMPORARY_BUFFER_SIZE can be used to know the size of
@@ -228,26 +253,9 @@ static const uint8_t VL53L5CX_NB_TARGET_PER_ZONE = 1;
  */
 
 #if VL53L5CX_MAX_RESULTS_SIZE < 1024U
-//#define VL53L5CX_TEMPORARY_BUFFER_SIZE ((uint32_t) 1024U)
-#define VL53L5CX_TEMPORARY_BUFFER_SIZE ((uint32_t) 4096U)
+#define VL53L5CX_TEMPORARY_BUFFER_SIZE ((uint32_t) 1024U)
 #else
 #define VL53L5CX_TEMPORARY_BUFFER_SIZE ((uint32_t) VL53L5CX_MAX_RESULTS_SIZE)
-#endif
-
-
-/**
- * @brief Macro VL53L5CX_LTF_FILTER. Can be enabled only under certain conditions
- */
-#ifndef VL53L5CX_DISABLE_SIGNAL_PER_SPAD
-#ifndef VL53L5CX_DISABLE_NB_TARGET_DETECTED
-#ifndef VL53L5CX_DISABLE_TARGET_STATUS
-#ifndef VL53L5CX_DISABLE_DISTANCE_MM
-#if VL53L5CX_NB_TARGET_PER_ZONE > 1
-#define VL53L5CX_LTF_FILTER 1
-#endif
-#endif
-#endif
-#endif
 #endif
 
 
@@ -258,7 +266,7 @@ static const uint8_t VL53L5CX_NB_TARGET_PER_ZONE = 1;
 
 typedef struct
 {
-	/* Platform, filled by customer into the 'vl53l5cx_i2.h' file */
+	/* Platform, filled by customer into the 'platform.h' file */
 	VL53L5CX_Platform	platform;
 	/* Results streamcount, value auto-incremented at each range */
 	uint8_t		        streamcount;
@@ -273,13 +281,9 @@ typedef struct
 	/* Xtalk buffer */
 	uint8_t		        xtalk_data[VL53L5CX_XTALK_BUFFER_SIZE];
 	/* Temporary buffer used for internal driver processing */
-	uint8_t		temp_buffer[VL53L5CX_TEMPORARY_BUFFER_SIZE];
-	/* Internal Data for long tail filter */
-#ifdef VL53L5CX_LTF_FILTER
-	uint8_t			target_order;
-	uint8_t			resolution;
-#endif
-
+	 uint8_t	        temp_buffer[VL53L5CX_TEMPORARY_BUFFER_SIZE];
+	/* Auto-stop flag for stopping the sensor */
+	uint8_t				is_auto_stop_enabled;
 } VL53L5CX_Configuration;
 
 
@@ -296,7 +300,10 @@ typedef struct
 
 typedef struct
 {
-	/* Ambiant noise in kcps/spads */
+	/* Internal sensor silicon temperature */
+	int8_t silicon_temp_degc;
+
+	/* Ambient noise in kcps/spads */
 #ifndef VL53L5CX_DISABLE_AMBIENT_PER_SPAD
 	uint32_t ambient_per_spad[VL53L5CX_RESOLUTION_8X8];
 #endif
@@ -342,7 +349,7 @@ typedef struct
 #endif
 
 	/* Motion detector results */
-#ifndef VL53L5CX_DISABLE_MOTION_DETECTOR
+#ifndef VL53L5CX_DISABLE_MOTION_INDICATOR
 	struct
 	{
 		uint32_t global_indicator_1;
@@ -628,6 +635,49 @@ uint8_t vl53l5cx_set_ranging_mode(
 		uint8_t				ranging_mode);
 
 /**
+ * @brief This function is used to disable the VCSEL charge pump
+ * This optimizes the power consumption of the device
+ * To be used only if AVDD = 3.3V
+ * @param (VL53L5CX_Configuration) *p_dev : VL53L5CX configuration structure.
+ */
+uint8_t vl53l5cx_enable_internal_cp(
+		VL53L5CX_Configuration          *p_dev);
+
+
+/**
+ * @brief This function is used to disable the VCSEL charge pump
+ * This optimizes the power consumption of the device
+ * To be used only if AVDD = 3.3V
+ * @param (VL53L5CX_Configuration) *p_dev : VL53L5CX configuration structure.
+ */
+uint8_t vl53l5cx_disable_internal_cp(
+ 	      VL53L5CX_Configuration          *p_dev);
+
+/**
+ * @brief This function is used to get the number of frames between 2 temperature
+ * compensation.
+ * @param (VL53L5CX_Configuration) *p_dev : VL53L5CX configuration structure.
+ * @param (uint32_t) *p_repeat_count : Number of frames before next temperature
+ * compensation. Set to 0 to disable the feature (default configuration).
+ */
+uint8_t vl53l5cx_get_VHV_repeat_count(
+		VL53L5CX_Configuration *p_dev,
+		uint32_t *p_repeat_count);
+
+/**
+ * @brief This function is used to set a periodic temperature compensation. By
+ * setting a repeat count different to 0 the firmware automatically runs a
+ * temperature calibration every N frames.
+ * default the repeat count is set to 0
+ * @param (VL53L5CX_Configuration) *p_dev : VL53L5CX configuration structure.
+ * @param (uint32_t) repeat_count : Number of frames between temperature
+ * compensation. Set to 0 to disable the feature (default configuration).
+ */
+uint8_t vl53l5cx_set_VHV_repeat_count(
+		VL53L5CX_Configuration *p_dev,
+		uint32_t repeat_count);
+
+/**
  * @brief This function can be used to read 'extra data' from DCI. Using a known
  * index, the function fills the casted structure passed in argument.
  * @param (VL53L5CX_Configuration) *p_dev : VL53L5CX configuration structure.
@@ -689,3 +739,5 @@ uint8_t vl53l5cx_dci_replace_data(
 		uint8_t				*new_data,
 		uint16_t			new_data_size,
 		uint16_t			new_data_pos);
+
+#endif //VL53L5CX_API_H_

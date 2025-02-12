@@ -1,4 +1,17 @@
-#pragma once
+/**
+  *
+  * Copyright (c) 2021 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+
+#ifndef VL53L5CX_PLUGIN_XTALK_H_
+#define VL53L5CX_PLUGIN_XTALK_H_
 
 #include "vl53l5cx_api.h"
 
@@ -21,21 +34,18 @@
 
 
 /**
- * This function starts the VL53L5CX sensor in order to calibrate Xtalk.
+ * @brief This function starts the VL53L5CX sensor in order to calibrate Xtalk.
  * This calibration is recommended is user wants to use a coverglass.
  * @param (VL53L5CX_Configuration) *p_dev : VL53L5CX configuration structure.
  * @param (uint16_t) reflectance_percent : Target reflectance in percent. This
  * value is include between 1 and 99%. For a better efficiency, ST recommends a
  * 3% target reflectance.
- *
  * @param (uint8_t) nb_samples : Nb of samples used for calibration. A higher
  * number of samples means a higher accuracy, but it increases the calibration
  * time. Minimum is 1 and maximum is 16.
- *
  * @param (uint16_t) distance_mm : Target distance in mm. The minimum allowed
  * distance is 600mm, and maximum is 3000mm. The target must stay in Full FOV,
  * so short distance are easier for calibration.
- *
  * @return (uint8_t) status : 0 if calibration OK, 127 if an argument has an
  * incorrect value, or 255 is something failed.
  */
@@ -377,3 +387,5 @@ static const uint8_t VL53L5CX_CALIBRATE_XTALK[] = {
 	0x00, 0x00, 0x00, 0x0F,
 	0x00, 0x01, 0x03, 0xD4
 };
+
+#endif /* VL53L5CX_PLUGIN_XTALK_H_ */
