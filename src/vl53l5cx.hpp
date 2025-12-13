@@ -23,7 +23,7 @@ class VL53L5CX {
 
     public:
 
-        typedef enum {
+        enum class res4X4_t : uint8_t {
 
             RES_4X4_HZ_1 = 1,
             RES_4X4_HZ_2,
@@ -86,9 +86,9 @@ class VL53L5CX {
             RES_4X4_HZ_59,
             RES_4X4_HZ_60
 
-        } res4X4_t;
+        };
 
-        typedef enum {
+        enum class res8X8_t : uint8_t {
 
             RES_8X8_HZ_1 = 1,
             RES_8X8_HZ_2,
@@ -104,9 +104,9 @@ class VL53L5CX {
             RES_8X8_HZ_12,
             RES_8X8_HZ_13,
             RES_8X8_HZ_14,
-            RES_8X8_HZ_15,
+            RES_8X8_HZ_15
 
-        } res8X8_t;
+        };
 
         void disable(void)
         {
@@ -311,6 +311,7 @@ class VL53L5CX {
 
         static void checkStatus(const uint8_t error, const char * fmt)
         {
+            ESP_LOGD("VL53L5CX", "VL53L5CX error: %d, fmt: %s", error, fmt);
             Debugger::checkStatus(error, fmt);
         }
 

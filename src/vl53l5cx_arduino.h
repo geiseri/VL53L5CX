@@ -8,8 +8,9 @@
 
 #pragma once
 
+#include <Arduino.h>
 #include "vl53l5cx.hpp"
-
+#include <Wire.h>
 class VL53L5CX_Arduino : public VL53L5CX {
 
     public:

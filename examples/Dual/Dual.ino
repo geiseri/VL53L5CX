@@ -22,7 +22,7 @@ static const uint8_t INT_PIN_1 = 16;
 // Set to 0 for continuous mode
 static const uint8_t INTEGRAL_TIME_MS = 10;
 
-static const VL53L5CX::res4X4_t RESOLUTION = VL53L5CX::RES_4X4_HZ_1;
+static const VL53L5CX::res4X4_t RESOLUTION = VL53L5CX::res4X4_t::RES_4X4_HZ_1;
 
 static VL53L5CX_Arduino _sensor0(LPN_PIN_0, INTEGRAL_TIME_MS, RESOLUTION);
 static VL53L5CX_Arduino _sensor1(LPN_PIN_1, INTEGRAL_TIME_MS, RESOLUTION);
